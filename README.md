@@ -38,7 +38,7 @@ What the caller (the app) must do, because the contract does not:
 - Trust logs only from known tokens and from the recorded Disperse address. A made-up token can emit
   `Transfer` and `Dispersed` with nothing moved, and `Dispersed.total` is what was asked, not proof of receipt.
 
-## DisperseV2 (written, not deployed)
+## DisperseV2
 
 `src/DisperseV2.sol`: everything above, plus public messages. v1 stays deployed and keeps working; v2 is a separate
 contract at a new address, because v1 cannot be changed.
@@ -155,7 +155,8 @@ address already has code. A swarm deployment lands at the swarm deployer's own a
 
 | chain | id | address | tx |
 |---|---|---|---|
-| Robinhood Chain | 4663 | `0x49959c0326c4dF604a4d62D46CCBAe3C056CC158` | [`0xeae6a300…`](https://robin.etherscan.io/tx/0xeae6a3002240dd9eac8272d9cc27ea116b749a8b7bafc5611bfd55b12fd2bff5) (block 112219060) |
+| Robinhood Chain, DisperseV2 | 4663 | `0xDdF5e791e4E7Cd09845b8BD8fa76758bB8E17C65` | [`0xeb57eb54…`](https://robin.etherscan.io/tx/0xeb57eb546e53199ac20a9e1de32024dbf2f673725fb9cc90926f5c646f8f18bf) (block 112783064) |
+| Robinhood Chain, Disperse (v1) | 4663 | `0x49959c0326c4dF604a4d62D46CCBAe3C056CC158` | [`0xeae6a300…`](https://robin.etherscan.io/tx/0xeae6a3002240dd9eac8272d9cc27ea116b749a8b7bafc5611bfd55b12fd2bff5) (block 112219060) |
 
 Deployed 2026-11-12 by the IMD swarm as launch 3221 from commit `f402a3a855b2f8f1c97aa0ea9367ebc975327eb3` of
 this repository, after its review panel reported nothing at medium or above (two informational notes, both
@@ -166,5 +167,13 @@ The deployed code is the tested code: `cast keccak $(cast code <address> --rpc-u
 `0xb65a4cb1e0ebc66ee4e7d80658ed75d5013b6c01d003638138623e0968ba43ca`, the same runtime as on Base (checked
 2026-11-12).
 
-The app reads the address from `src/lib/robinhoodChain.ts` and the ABI from `public/weir/abi/Disperse.json`,
+DisperseV2 was deployed 2026-11-12 by the IMD swarm as launch 3244 from commit
+`5869277450f209970f1d14e62e2f4590bedfc9e7`, after its panel (an imported-code audit, four specialists and a judge)
+reported nothing at medium or above; its one informational note is the permit replacing a standing allowance. An
+earlier launch of the same bytecode stopped before deploying because a gas bound in the tests was too tight for the
+panel's forge version; the contract was not changed between the two. Its runtime keccak is
+`0x325962a1abe12d0b1de330d0e53257d11a059b9a6beaa0cb9ea38d6f5d13d9a3` (checked on chain 2026-11-12). Not an audit.
+
+The app reads the addresses from `src/lib/robinhoodChain.ts` and the ABIs from `public/weir/abi/Disperse.json` and
+`DisperseV2.json`,
 written with `forge inspect src/Disperse.sol:Disperse abi --json`.
