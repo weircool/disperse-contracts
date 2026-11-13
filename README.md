@@ -167,6 +167,10 @@ The deployed code is the tested code: `cast keccak $(cast code <address> --rpc-u
 `0xb65a4cb1e0ebc66ee4e7d80658ed75d5013b6c01d003638138623e0968ba43ca`, the same runtime as on Base (checked
 2026-11-12).
 
+Both contracts' source is verified on Sourcify for chain 4663 (full match, 2026-11-12). Verification on
+`robin.etherscan.io` itself is a separate step that needs an Etherscan API key and has not been done; until it is,
+that explorer shows their logs undecoded.
+
 DisperseV2 was deployed 2026-11-12 by the IMD swarm as launch 3244 from commit
 `5869277450f209970f1d14e62e2f4590bedfc9e7`, after its panel (an imported-code audit, four specialists and a judge)
 reported nothing at medium or above; its one informational note is the permit replacing a standing allowance. An
